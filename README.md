@@ -33,19 +33,14 @@ npm install
 
 1. Set up your environment variables by creating a `.env` file in the root directory with the following content:
 
-ETHEREUM_NETWORK ="<ETHEREUM_NETWORK>"
-INFURA_API_KEY="<Infura-private-key>"
+ETHEREUM_NETWORK =<ETHEREUM_NETWORK>
+INFURA_API_KEY=<Infura-private-key>
+SIGNER_PRIVATE_KEY=<wallet-private-key>
 
 Replace `<ETHEREUM_NETWORK>` with "holesky".
-Replace `<Infura-private-key>` with your respective values.
-
-2. Add your wallet private keys to  `accounts.json` :
-
-"pvtKey": "YOUR-ACCOUNT-PRIVATE-KEY"
-
-Replace `YOUR-ACCOUNT-PRIVATE-KEY` with your respective values.
-
-3. Run the program using the following commands:
+Replace `<Infura-private-key>`,`<wallet-private-key>` with your respective values.
+ 
+2. Run the program using the following commands:
 
 npx tsc
 touch src/solc-lib.ts 

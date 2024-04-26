@@ -33,11 +33,9 @@ const initProvider = (): Web3BaseProvider => {
 /**
  * Get an account given its name
  */
-const getAccount = (web3: typeof Web3, name: string) => {
+const getAccount = (web3: typeof Web3, pvtKey: string) => {
     try {
-        const accountData = fs.readFileSync('eth_accounts/accounts.json', 'utf8')
-        const accountJson = JSON.parse(accountData)
-        const accountPvtKey = accountJson[name]['pvtKey']
+        const accountPvtKey = pvtKey
 
         // Build an account object given private key
         web3.eth.accounts.wallet.add(accountPvtKey)
@@ -74,20 +72,20 @@ const getBalanceFromAddress =   async (web3: typeof Web3,address: string,message
 
 const contractDeployment =   async (
      web3: typeof Web3,
-     accountName:string ,
      contractName:string ,
      tokenName:string ,
      tokenSymbol:string ,
      tokenTotalSupply:number ,
+     pvtKey: string
 ): Promise<void>  => {
     const buildPath = path.resolve(__dirname, '');
     try {
-        getAccount(web3, 'acc0')
+        getAccount(web3, pvtKey)
     } catch (error) {
         console.error(error)
         throw 'Cannot access accounts'
     }
-    console.log('Accessing account: ' + accountName)
+    console.log('Accessing account: ' + pvtKey)
 
     getBalanceFromAddress(web3,web3.eth.accounts.wallet[0].address,"Current ETH balance of ")
 
@@ -189,13 +187,13 @@ const contractDeployment =   async (
     console.log('Connected to Web3 provider.')
 
     // Deploy contract as account 0
-    const accountName = 'acc0'
     const contractName = 'MyToken'
     const tokenName = 'My Token'
     const tokenSymbol = 'MyT'
     const tokenTotalSupply = 100000
-
-    contractDeployment(web3,accountName,contractName,tokenName,tokenSymbol,tokenTotalSupply)
+    const pvtKey:string = process.env.SIGNER_PRIVATE_KEY || ''
+    
+    contractDeployment(web3,contractName,tokenName,tokenSymbol,tokenTotalSupply,pvtKey)
 
     process.exitCode = 0
 
