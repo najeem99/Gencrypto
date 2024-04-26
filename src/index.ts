@@ -5,6 +5,7 @@ import type { Web3BaseProvider, AbiStruct, Address } from 'web3-types'
 
 let fs = require('fs')
 const path = require('path');
+require("dotenv").config();
 
 /**
  * Helper class to calculate adjusted gas value that is higher than estimate
@@ -41,6 +42,7 @@ const getAccount = (web3: typeof Web3, name: string) => {
         // Build an account object given private key
         web3.eth.accounts.wallet.add(accountPvtKey)
     } catch (error) {
+        console.log(error)
         throw 'Cannot read account'
     }
 }
@@ -60,40 +62,25 @@ const getABI = (contractName: string, buildPath: string): AbiStruct => {
 }
     //ETH balance of the user  
 const getBalanceFromAddress =   async (web3: typeof Web3,address: string,message:string): Promise<void>  => {
-    let from = web3.eth.accounts.wallet[0].address
-    try {
-        const balanceWei = await web3.eth.getBalance(from);
+     try {
+        const balanceWei = await web3.eth.getBalance(address);
         const balanceEther = web3.utils.fromWei(balanceWei, 'ether');
-        console.log('Current ETH balance of', from, 'is:', balanceEther, 'ETH');
+        console.log(message, address, 'is:', balanceEther, 'ETH');
         } catch (error) {
         console.error(error)
     }
 
 }
 
-(async () => {
-
-    let web3Provider: Web3BaseProvider
-    let web3: typeof Web3
+const contractDeployment =   async (
+     web3: typeof Web3,
+     accountName:string ,
+     contractName:string ,
+     tokenName:string ,
+     tokenSymbol:string ,
+     tokenTotalSupply:number ,
+): Promise<void>  => {
     const buildPath = path.resolve(__dirname, '');
-
-    // Init Web3 provider
-    try {
-        web3Provider = initProvider()
-        web3 = new Web3(web3Provider)
-    } catch (error) {
-        console.error(error)
-        throw 'Web3 cannot be initialized.'
-    }
-    console.log('Connected to Web3 provider.')
-
-    // Deploy contract as account 0
-    const accountName = 'acc0'
-    const contractName = 'MyToken'
-    const tokenName = 'My Token'
-    const tokenSymbol = 'MyT'
-    const tokenTotalSupply = 100000
-
     try {
         getAccount(web3, 'acc0')
     } catch (error) {
@@ -101,12 +88,10 @@ const getBalanceFromAddress =   async (web3: typeof Web3,address: string,message
         throw 'Cannot access accounts'
     }
     console.log('Accessing account: ' + accountName)
-    let from = web3.eth.accounts.wallet[0].address
 
-
-    //ETH balance of the user Before token deployment
     getBalanceFromAddress(web3,web3.eth.accounts.wallet[0].address,"Current ETH balance of ")
 
+    let from = web3.eth.accounts.wallet[0].address
 
 
     // Compile contract and save it into a file for future use
@@ -144,7 +129,7 @@ const getBalanceFromAddress =   async (web3: typeof Web3,address: string,message
             gasPrice,
             gas: GasHelper.gasPay(gasLimit)
         })
-        console.log('Contract contract deployed at address: ' + tx.options.address)
+        console.log('\n Contract contract deployed at address: ' + tx.options.address)
         contractAddress = tx.options.address
     } catch (error) {
         console.error(error)
@@ -182,8 +167,35 @@ const getBalanceFromAddress =   async (web3: typeof Web3,address: string,message
     } catch (error) {
         console.error(error)
     }
-
     getBalanceFromAddress(web3,web3.eth.accounts.wallet[0].address,"Current ETH balance of ")
+
+
+}
+
+(async () => {
+
+    let web3Provider: Web3BaseProvider
+    let web3: typeof Web3
+    const buildPath = path.resolve(__dirname, '');
+
+    // Init Web3 provider
+    try {
+        web3Provider = initProvider()
+        web3 = new Web3(web3Provider)
+    } catch (error) {
+        console.error(error)
+        throw 'Web3 cannot be initialized.'
+    }
+    console.log('Connected to Web3 provider.')
+
+    // Deploy contract as account 0
+    const accountName = 'acc0'
+    const contractName = 'MyToken'
+    const tokenName = 'My Token'
+    const tokenSymbol = 'MyT'
+    const tokenTotalSupply = 100000
+
+    contractDeployment(web3,accountName,contractName,tokenName,tokenSymbol,tokenTotalSupply)
 
     process.exitCode = 0
 
