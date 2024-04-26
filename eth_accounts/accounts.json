@@ -1,15 +1,12 @@
 {
     "_comment": "Makesure to replace following private keys ",
     "acc0": {
-        "pvtKey": "YOUR-ACCOUNT-PRIVATE-KEY"
+        "pvtKey": "YOUR-ACCOUNT-PRIVATE"
     },
     "acc1": {
-        "pvtKey": "YOUR-ACCOUNT-PRIVATE-KEY"
+        "pvtKey": "YOUR-ACCOUNT-PRIVATE-KEY-IF-NEEDED"
     },
     "acc2": {
-        "pvtKey": "YOUR-ACCOUNT-PRIVATE-KEY"
-    },
-    "acc3": {
-        "pvtKey": "YOUR-ACCOUNT-PRIVATE-KEY"
+        "pvtKey": "YOUR-ACCOUNT-PRIVATE-KEY-IF-NEEDED"
     }
 }
