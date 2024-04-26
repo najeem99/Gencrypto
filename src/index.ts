@@ -22,12 +22,6 @@ class GasHelper {
  */
 const initProvider = (): Web3BaseProvider => {
     try {
-        // const providerData = fs.readFileSync('eth_providers/providers.json', 'utf8')
-        // const providerJson = JSON.parse(providerData)
-
-        //Enable one of the next 2 lines depending on Ganache CLI or GUI
-        // const providerLink = providerJson['provider_link_ui']
-        // const providerLink = providerJson['provider_link_cli']
         const network = process.env.ETHEREUM_NETWORK;
         return new Web3.providers.HttpProvider(`https://${network}.infura.io/v3/${process.env.INFURA_API_KEY}`)
     } catch (error) {
@@ -112,15 +106,7 @@ const getBalanceFromAddress =   async (web3: typeof Web3,address: string,message
 
     //ETH balance of the user Before token deployment
     getBalanceFromAddress(web3,web3.eth.accounts.wallet[0].address,"Current ETH balance of ")
-    // from = web3.eth.accounts.wallet[0].address
-    // try {
-    //     const balanceWei = await web3.eth.getBalance(from);
-    //     const balanceEther = web3.utils.fromWei(balanceWei, 'ether');
-    //     console.log('Current ETH balance of', from, 'is:', balanceEther, 'ETH');
 
-    //     } catch (error) {
-    //     console.error(error)
-    // }
 
 
     // Compile contract and save it into a file for future use
@@ -197,40 +183,8 @@ const getBalanceFromAddress =   async (web3: typeof Web3,address: string,message
         console.error(error)
     }
 
-    // Transfer tokens from address 0 to address 1 and check balance
-    // let to = web3.eth.accounts.wallet[1].address
-    // try {
-
-    //     const gasPrice = await web3.eth.getGasPrice(ETH_DATA_FORMAT)
-    //     const gasLimit = await contractDeployed.methods.transfer(to, 2000).estimateGas(
-    //         { from },
-    //         DEFAULT_RETURN_FORMAT, // the returned data will be formatted as a bigint
-    //     );
-    //     const tx = await contractDeployed.methods.transfer(to, 2000).send({
-    //         from,
-    //         gasPrice,
-    //         gas: GasHelper.gasPay(gasLimit)
-    //     })
-
-    //     console.log(`20.00 tokens transferred from address ${from} to address ${to} in transaction ${tx.transactionHash}`)
-
-    //     // Check balance as address 0 and 1
-    //     const balance0 = await contractDeployed.methods.balanceOf(from).call()
-    //     console.log(`Balance of address 0 is: ${balance0}`)
-
-    //     const balance1 = await contractDeployed.methods.balanceOf(to).call()
-    //     console.log(`Balance of address 1 is: ${balance1}`)
-
-    // } catch (error) {
-    //     console.error('Error while transferring tokens and checking balance')
-    //     console.error(error)
-    // }
     getBalanceFromAddress(web3,web3.eth.accounts.wallet[0].address,"Current ETH balance of ")
 
     process.exitCode = 0
 
 })()
-
-// npx tsc
-// touch src/solc-lib.ts 
-// node build/index.js    
