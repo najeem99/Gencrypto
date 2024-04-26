@@ -33,9 +33,10 @@ npm install
 
 1. Set up your environment variables by creating a `.env` file in the root directory with the following content:
 
-ETHEREUM_NETWORK ="holesky"
+ETHEREUM_NETWORK ="<ETHEREUM_NETWORK>",
 INFURA_API_KEY=<Infura-private-key>
 
+Replace `<ETHEREUM_NETWORK>` with "holesky".
 Replace `<Infura-private-key>` with your respective values.
 
 2. Add your wallet private keys to  `accounts.json` :
