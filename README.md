@@ -33,6 +33,7 @@ npm install
 
 1. Set up your environment variables by creating a `.env` file in the root directory with the following content:
 
+ETHEREUM_NETWORK ="holesky"
 INFURA_API_KEY=<Infura-private-key>
 
 Replace `<Infura-private-key>` with your respective values.
