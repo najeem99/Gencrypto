@@ -33,21 +33,27 @@ npm install
 
 1. Set up your environment variables by creating a `.env` file in the root directory with the following content:
 
-BASE_TESTNET_URL=<Base testnet URL>
-PRIVATE_KEY=<Your private key>
-USER_ADDRESS=<Your address>
+INFURA_API_KEY=<Infura-private-key>
 
-Replace `<Base testnet URL>`, `<Your private key>`, and `<Your address>` with your respective values.
+Replace `<Infura-private-key>` with your respective values.
 
-2. Run the program using the following command:
+2. Add your wallet private keys to  `accounts.json` :
 
-npm start
+"pvtKey": "YOUR-ACCOUNT-PRIVATE-KEY"
+
+Replace `YOUR-ACCOUNT-PRIVATE-KEY` with your respective values.
+
+3. Run the program using the following commands:
+
+npx tsc
+touch src/solc-lib.ts 
+node build/index.js    
 
 
 ## Program Structure
 
 - **`index.ts`**: Main TypeScript file containing the program logic.
-- **`contracts/ERC20.sol`**: Solidity source code for the ERC20 smart contract.
+- **`contracts/MyToken.sol`**: Solidity source code for the ERC20 smart contract.
 - **`.env`**: Environment variable configuration file.
 - **`package.json`**: Dependency and script configuration file.
 
